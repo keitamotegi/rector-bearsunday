@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Rector\BearSunday\NamedAttributeParam\Rector\ClassMethod\NamedAttributeToParameterRector;
 use Rector\BearSunday\RayDiNamedAnnotation\Rector\ClassMethod\RayDiNamedAnnotationRector;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
@@ -9,8 +10,10 @@ use Rector\Php80\ValueObject\AnnotationToAttribute;
 
 return RectorConfig::configure()
     // Update @Named method annotations to #[Named] parameter attributes
+    // Move method-level #[Named] attributes to parameter-level
     ->withRules([
         RayDiNamedAnnotationRector::class,
+        NamedAttributeToParameterRector::class,
     ])
     ->withConfiguredRule(AnnotationToAttributeRector::class, [
         // ray/aura-sql-module
