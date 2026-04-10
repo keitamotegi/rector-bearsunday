@@ -56,6 +56,52 @@ class SomeClass
 }
 ```
 
+### NamedAttributeToParameterRector
+
+Moves method-level `#[Named]` attributes to parameter-level. This is required for ray/di 2.19+, where method-level `#[Named]` no longer auto-propagates to parameters.
+
+**Before:**
+```php
+use Ray\Di\Di\Inject;
+use Ray\Di\Di\Named;
+
+class SomeClass
+{
+    #[Inject]
+    #[Named('json')]
+    public function setRenderer(RenderInterface $renderer): void
+    {
+    }
+}
+```
+
+**After:**
+```php
+use Ray\Di\Di\Inject;
+use Ray\Di\Di\Named;
+
+class SomeClass
+{
+    #[Inject]
+    public function setRenderer(#[Named('json')] RenderInterface $renderer): void
+    {
+    }
+}
+```
+
+Also supports key=value format for multiple parameters:
+
+**Before:**
+```php
+#[Named('a=foo,b=bar')]
+public function __construct(int $a, int $b)
+```
+
+**After:**
+```php
+public function __construct(#[Named('foo')] int $a, #[Named('bar')] int $b)
+```
+
 ### AnnotationToAttributeRector
 
 Converts BEAR.Sunday and Ray.Di annotations to PHP 8 attributes.

@@ -57,6 +57,7 @@ Note: When installed via `composer-bin-plugin`, the path may be:
 | Rule | Purpose |
 |------|---------|
 | `RayDiNamedAnnotationRector` | `@Named("a=foo")` on method → `#[Named('foo')]` on parameters |
+| `NamedAttributeToParameterRector` | Method-level `#[Named('foo')]` → parameter-level `#[Named('foo')]` (ray/di 2.19+) |
 | `SetterToConstructorInjectionRector` | `#[Inject]` setter → constructor injection |
 | `TraitToConstructorInjectionRector` | `use ResourceInject` → constructor injection |
 | `ResourceObjectReturnTypeRector` | `: ResourceObject` / `: self` → `: static` |
